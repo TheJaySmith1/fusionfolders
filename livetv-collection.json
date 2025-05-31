@@ -1,0 +1,37 @@
+[
+    {
+    "id": "UKTV",
+    "name": "UK Live",
+    "category": "Live TV",
+    "catalogIds": [],
+    "displayMode": "Grid",
+    "layout": "Landscape",
+    "backgroundImageURL": "https://i.postimg.cc/MGhT4WSm/UK.avif",
+    "iconName": "film",
+    "showIcon": false,
+    "nameDisplayMode": "Hidden",
+    "mediaTypeFilter": "All Content",
+    "textSize": "Large",
+    "textWeight": "Bold",
+    "textColor": "#FFFFFF",
+    "backgroundColor": "#000000"
+  },
+  {
+    "id": "USATV",
+    "name": "US Live",
+    "category": "Live TV",
+    "catalogIds": [],
+    "displayMode": "Grid",
+    "layout": "Landscape",
+    "backgroundImageURL": "https://i.postimg.cc/FKj5rmSZ/US.avif",
+    "iconName": "film",
+    "showIcon": false,
+    "nameDisplayMode": "Hidden",
+    "mediaTypeFilter": "All Content",
+    "textSize": "Large",
+    "textWeight": "Bold",
+    "textColor": "#FFFFFF",
+    "backgroundColor": "#000000"
+  }
+
+]
