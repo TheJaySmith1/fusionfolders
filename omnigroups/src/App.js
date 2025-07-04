@@ -9,10 +9,15 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import CategorySection from './components/CategorySection';
 import ImageCard from './components/ImageCard';
+import PreviewModal from './components/PreviewModal';
+import JsonManager from './components/JsonManager';
 
 function App() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showJsonManager, setShowJsonManager] = useState(false);
+  const [previewModal, setPreviewModal] = useState({ isOpen: false, item: null });
+  const [copyNotification, setCopyNotification] = useState('');
 
   // Combine all data with additional categories
   const allData = [
@@ -87,6 +92,19 @@ function App() {
     return matchesCategory && matchesSearch;
   });
 
+  const handlePreview = (item) => {
+    setPreviewModal({ isOpen: true, item });
+  };
+
+  const closePreview = () => {
+    setPreviewModal({ isOpen: false, item: null });
+  };
+
+  const handleCopyUrl = (url) => {
+    setCopyNotification('URL copied to clipboard!');
+    setTimeout(() => setCopyNotification(''), 3000);
+  };
+
   return (
     <div className="App">
       <Header 
@@ -98,6 +116,32 @@ function App() {
       
       <main className="main-content">
         <div className="container">
+          {/* Action Bar */}
+          <div className="action-bar">
+            <button 
+              className={`action-bar-btn ${showJsonManager ? 'active' : ''}`}
+              onClick={() => setShowJsonManager(!showJsonManager)}
+            >
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zM9.5 3A1.5 1.5 0 0 0 8 4.5h4.5L9.5 3z"/>
+              </svg>
+              {showJsonManager ? 'Hide' : 'Show'} JSON Files
+            </button>
+          </div>
+
+          {/* JSON Manager */}
+          {showJsonManager && <JsonManager />}
+
+          {/* Copy Notification */}
+          {copyNotification && (
+            <div className="copy-notification">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+              </svg>
+              {copyNotification}
+            </div>
+          )}
+
           {/* Category Navigation */}
           <div className="category-nav">
             {categories.map(category => (
@@ -122,7 +166,12 @@ function App() {
           {/* Image Grid */}
           <div className="image-grid">
             {filteredData.map(item => (
-              <ImageCard key={item.id} item={item} />
+              <ImageCard 
+                key={item.id} 
+                item={item} 
+                onPreview={handlePreview}
+                onCopyUrl={handleCopyUrl}
+              />
             ))}
           </div>
 
@@ -134,6 +183,14 @@ function App() {
           )}
         </div>
       </main>
+
+      {/* Preview Modal */}
+      <PreviewModal
+        isOpen={previewModal.isOpen}
+        onClose={closePreview}
+        item={previewModal.item}
+        allData={allData}
+      />
 
       {/* Footer */}
       <footer className="footer">
